@@ -1,13 +1,13 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { Box, Container, Pagination, TextField } from '@mui/material';
+import { Container, TextField } from '@mui/material';
 import useDebouncedValue from '../hooks/useDebouncedValue';
 import { ProductsResponse, getProducts } from '../api/products';
-import { useParams } from 'react-router-dom';
+import {  useSearchParams } from 'react-router-dom';
 import ProductsList from './ProductsList';
 import PaginationBox from './PaginationBox';
 
 function HomePage() {
-  const params = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const isMounted = useRef(false);
   const [inputValue, setInputValue] = useState('');
   const [productsRes, setProductsRes] = useState<ProductsResponse>();
@@ -15,6 +15,18 @@ function HomePage() {
 
   const handleInput = (value: string) => {
     setInputValue(value);
+  }
+
+  const getPageNumber = (pageValue: string | number | null): number | null => {
+    if(typeof pageValue === "number") {
+        return pageValue;
+    }
+
+    if(typeof pageValue === "string") {
+        return parseInt(pageValue);
+    }
+
+    return null;
   }
 
   const handleChangePage = (
@@ -25,6 +37,7 @@ function HomePage() {
         id: debouncedInputTerm || '',
         page: newPage.toString()
     }).then((res) => {
+        setSearchParams({ page: newPage.toString() });
         setProductsRes(res);
     });
   };
@@ -38,15 +51,17 @@ function HomePage() {
     getProducts({
         id: debouncedInputTerm
     }).then((res) => {
+        debouncedInputTerm && setSearchParams({ id: debouncedInputTerm});
         setProductsRes(res);
     });
   }, [debouncedInputTerm]); // After value debounce, fetch results by ID
 
   useEffect(() => {
-    const { id, page } = params; // TODO implement router and params
+    const id = searchParams.get('id');
+    const page = searchParams.get('page');
     getProducts({
       id: id || '',
-      page: page || ''
+      page: page ||  ''
     }).then((res) => {
       setProductsRes(res);
     });
@@ -69,6 +84,7 @@ function HomePage() {
             <ProductsList {...productsRes}/>
             <PaginationBox
                 count={productsRes?.products?.total_pages || 0}
+                defaultPage={getPageNumber(searchParams.get('page')) || 1}
                 changeEvent={handleChangePage}
             />
         </Container>
