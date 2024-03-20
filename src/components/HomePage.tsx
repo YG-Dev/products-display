@@ -54,7 +54,7 @@ function HomePage() {
         debouncedInputTerm && setSearchParams({ id: debouncedInputTerm});
         setProductsRes(res);
     });
-  }, [debouncedInputTerm]); // After value debounce, fetch results by ID
+  }, [debouncedInputTerm, setSearchParams]); // After value debounce, fetch results by ID
 
   useEffect(() => {
     const id = searchParams.get('id');
@@ -65,7 +65,8 @@ function HomePage() {
     }).then((res) => {
       setProductsRes(res);
     });
-  }, []) // Search for urls on load and fetch products
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // Search for urls on load and fetch products. Do it once on mount
 
   return (
     <Container sx={{ minWidth: '100vw', minHeight: '100vh', backgroundColor: '#121212' }}>
