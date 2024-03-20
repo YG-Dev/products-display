@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Container, TextField } from '@mui/material';
 import useDebouncedValue from '../hooks/useDebouncedValue';
 import { ProductsResponse, getProducts } from '../api/products';
-import {  useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import ProductsList from './ProductsList';
 import PaginationBox from './PaginationBox';
 
@@ -54,7 +54,8 @@ function HomePage() {
         debouncedInputTerm && setSearchParams({ id: debouncedInputTerm});
         setProductsRes(res);
     });
-  }, [debouncedInputTerm, setSearchParams]); // After value debounce, fetch results by ID
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedInputTerm]); // After value debounce, fetch results by ID
 
   useEffect(() => {
     const id = searchParams.get('id');
