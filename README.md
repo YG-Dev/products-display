@@ -1,6 +1,19 @@
-# Getting Started with Create React App
+# Products Display
+
+Products Display is a short application using [Regres API](https://reqres.in) to retrieve and display a list of products. Each product can be clicked and display modal box with all information related to single product. It also contains input based data fetching, error handling and dynamic search parameters system, which allows to retrieve product with specific ID or page.
+
+## Bootstrapping and workflow
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+This project uses GitHub integrated workflow from [Firebase](https://firebase.google.com).
+
+Latest deployed version of this project is hosted on [products-display.firebaseapp.com](https://products-display.firebaseapp.com)
+
+## Used packages
+
+React Router Dom - [react-router-dom](https://www.npmjs.com/package/react-router-dom)
+Material UI - [mui](https://mui.com/material-ui/)
 
 ## Available Scripts
 
@@ -44,3 +57,5 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+To learn about Firebase hosting and workflow, check out the [Firebase docs](https://firebase.google.com/docs).
